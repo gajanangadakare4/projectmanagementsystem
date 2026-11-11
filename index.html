@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FlowBoard project management and collaboration application">
+    <title>FlowBoard | Project Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- AUTHENTICATION -->
+    <section id="authSection" class="auth-section">
+
+        <div class="auth-brand">
+            <a href="#" class="brand brand-light">
+                <span class="brand-logo">F</span>
+                FlowBoard
+            </a>
+
+            <div class="brand-content">
+                <span class="eyebrow">PLAN. COLLABORATE. DELIVER.</span>
+                <h1>Good work happens when teams flow.</h1>
+                <p>
+                    Bring projects, people and progress together
+                    in one simple workspace.
+                </p>
+            </div>
+
+            <div class="brand-footer">
+                A simple project collaboration workspace.
+            </div>
+        </div>
+
+        <div class="auth-container">
+
+            <div class="auth-card">
+
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-auth="login">
+                        Login
+                    </button>
+
+                    <button class="auth-tab" data-auth="register">
+                        Register
+                    </button>
+                </div>
+
+                <!-- LOGIN -->
+                <form id="loginForm" class="auth-form">
+
+                    <h2>Welcome back!</h2>
+                    <p class="muted">Login to access your workspace.</p>
+
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button type="submit" class="btn btn-primary full-width">
+                        Login
+                    </button>
+
+                    <p id="loginMessage" class="message"></p>
+                </form>
+
+                <!-- REGISTER -->
+                <form id="registerForm" class="auth-form hidden">
+
+                    <h2>Create Account</h2>
+                    <p class="muted">Join FlowBoard and manage your projects.</p>
+
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        id="registerName"
+                        placeholder="Enter your full name"
+                        maxlength="60"
+                        autocomplete="name"
+                        required
+                    >
+
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        placeholder="Minimum 8 characters"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button type="submit" class="btn btn-primary full-width">
+                        Create Account
+                    </button>
+
+                    <p id="registerMessage" class="message"></p>
+                </form>
+
+                <div class="auth-footer">
+                    FlowBoard · Frontend Demo
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- MAIN APPLICATION -->
+    <div id="appSection" class="app hidden">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="#" class="brand">
+                <span class="brand-logo">F</span>
+                FlowBoard
+            </a>
+
+            <div class="sidebar-label">WORKSPACE</div>
+
+            <nav class="navigation">
+
+                <button class="nav-link active" data-page="dashboard">
+                    <span>▦</span> Dashboard
+                </button>
+
+                <button class="nav-link" data-page="myProjects">
+                    <span>▣</span> My Projects
+                </button>
+
+                <button class="nav-link" data-page="explore">
+                    <span>⌕</span> Explore Projects
+                </button>
+
+                <button class="nav-link" data-page="requests">
+                    <span>✉</span> Join Requests
+                    <span id="requestBadge" class="badge hidden">0</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="user-profile">
+                    <div class="avatar" id="sidebarAvatar">U</div>
+
+                    <div class="user-details">
+                        <strong id="sidebarName">User</strong>
+                        <small id="sidebarEmail">user@email.com</small>
+                    </div>
+                </div>
+
+                <button id="logoutBtn" class="logout-btn">
+                    ↪ Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <span class="eyebrow dark-eyebrow">
+                        YOUR WORKSPACE
+                    </span>
+
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+
+                <div class="top-user">
+                    <span id="topUserName">User</span>
+                    <div class="avatar" id="topAvatar">U</div>
+                </div>
+
+            </header>
+
+
+            <!-- DASHBOARD -->
+            <section id="dashboardPage" class="page">
+
+                <div class="welcome-section">
+
+                    <div>
+                        <h2>
+                            Welcome back,
+                            <span id="welcomeName">User</span> 👋
+                        </h2>
+
+                        <p class="muted">
+                            Here's what's happening with your workspace.
+                        </p>
+                    </div>
+
+                    <button class="btn btn-primary" data-action="create-project">
+                        + Create Project
+                    </button>
+
+                </div>
+
+
+                <!-- STATISTICS -->
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">▣</div>
+                        <span>My Projects</span>
+                        <h2 id="ownedCount">0</h2>
+                        <small>Projects created by you</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">♧</div>
+                        <span>Joined Projects</span>
+                        <h2 id="joinedCount">0</h2>
+                        <small>Projects you are a member of</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">✉</div>
+                        <span>Pending Requests</span>
+                        <h2 id="pendingCount">0</h2>
+                        <small>Requests awaiting a decision</small>
+                    </div>
+
+                </div>
+
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Recent Projects</h2>
+                        <p class="muted">Your latest project activity.</p>
+                    </div>
+
+                    <button class="text-btn" data-page-link="myProjects">
+                        View All →
+                    </button>
+                </div>
+
+                <div id="recentProjects" class="project-grid"></div>
+
+            </section>
+
+
+            <!-- MY PROJECTS -->
+            <section id="myProjectsPage" class="page hidden">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>My Projects</h2>
+                        <p class="muted">
+                            Projects you created or joined.
+                        </p>
+                    </div>
+
+                    <button class="btn btn-primary" data-action="create-project">
+                        + New Project
+                    </button>
+                </div>
+
+                <div id="myProjects" class="project-grid"></div>
+
+            </section>
+
+
+            <!-- EXPLORE PROJECTS -->
+            <section id="explorePage" class="page hidden">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Explore Projects</h2>
+                        <p class="muted">
+                            Discover projects created by other members.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="search-box">
+                    <span>⌕</span>
+
+                    <input
+                        type="search"
+                        id="projectSearch"
+                        placeholder="Search projects..."
+                    >
+                </div>
+
+                <div id="exploreProjects" class="project-grid"></div>
+
+            </section>
+
+
+            <!-- JOIN REQUESTS -->
+            <section id="requestsPage" class="page hidden">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Join Requests</h2>
+                        <p class="muted">
+                            Manage project membership requests.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="request-columns">
+
+                    <div>
+                        <h3>Requests Received</h3>
+                        <p class="muted">Requests for your projects.</p>
+
+                        <div id="receivedRequests" class="request-list"></div>
+                    </div>
+
+                    <div>
+                        <h3>Requests Sent</h3>
+                        <p class="muted">Your project applications.</p>
+
+                        <div id="sentRequests" class="request-list"></div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+
+    <!-- CREATE PROJECT MODAL -->
+    <div id="projectModal" class="modal hidden">
+
+        <div class="modal-overlay" data-action="close-modal"></div>
+
+        <form id="projectForm" class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <span class="eyebrow dark-eyebrow">NEW WORKSPACE</span>
+                    <h2>Create Project</h2>
+                </div>
+
+                <button type="button" class="close-btn" data-action="close-modal">
+                    ×
+                </button>
+            </div>
+
+            <label>Project Name</label>
+
+            <input
+                type="text"
+                id="projectName"
+                placeholder="Enter project name"
+                maxlength="80"
+                required
+            >
+
+            <label>Description</label>
+
+            <textarea
+                id="projectDescription"
+                rows="4"
+                maxlength="500"
+                placeholder="Describe your project..."
+                required
+            ></textarea>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" data-action="close-modal">
+                    Cancel
+                </button>
+
+                <button type="submit" class="btn btn-primary">
+                    Create Project
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+
+    <!-- TOAST -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>
